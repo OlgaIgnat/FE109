@@ -1,3 +1,4 @@
+
 let str="Привет",
     sum=123,
     num=15.8,
@@ -96,4 +97,7 @@ console.log("Hello,"+nameUser+" how are you doing today?");
 
 
 
+
+
+ 
 

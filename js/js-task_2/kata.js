@@ -21,3 +21,4 @@ function getGrade (s1, s2, s3) {
     if(((s1+s2+s3)/3)>=60 && ((s1+s2+s3)/3)<70) return "D";
     if(((s1+s2+s3)/3)>=0 && ((s1+s2+s3)/3)<60) return "F";
 }
+ 

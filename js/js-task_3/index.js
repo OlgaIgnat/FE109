@@ -35,12 +35,12 @@ console.log(sum);
      console.log(i);
  }*/
 
-i=6;
-/*как сделать правильно,чтобы  8 тоже выводилась в консоль?*/
-while (i<=56){
+i=8;
+while (i<=56){   
+    if(i%2==0) {              
+    console.log(i);
+    }
     i++; 
-    if(i%2==1) continue;     
-    console.log(i);    
  }
 
 
@@ -105,5 +105,17 @@ for(i=0; i<arrStr.length;i++){
 console.log("MAX  " +max+  ", MIN "+min);
 
 //10
-/* в HTML*/
+ let str2=prompt("Введите число"),
+     sum2=0;
+let arrStr2=str2.split("");
+for (i = 0; i < arrStr2.length; i++){
+    sum2+= +arrStr2[i];
+}
+document.write("Число :"  +str2+ "<br/>");
+let revStr2;
+revStr2=arrStr2.reverse().join("");
+document.write("Цифр в числе :" +arrStr2.length+ "<br/>"+"Сумма чисел :"  +sum2+ "<br/>"+"Обратный порядок :" +revStr2+ "<br/>");
+
+
+
 

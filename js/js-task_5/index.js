@@ -133,15 +133,18 @@ createArr([21,23,1,22,36,15,-1]);
         
        document.write("ЗАДАНИЕ 7:"+'<br/>')
         let number;
-        function pyramid(number){        
-            for (i = 1; i <= number; i++) {
-                for (let j = 1; j <= i; j++) {
-                    document.write(i);
+        
+        function pyramid(number,a){        
+            for (let j = 1; j <= number; j++) {
+                for (i = 1; i <= j; i++) {
+                    if (a==null)
+                    {document.write(j);}
+                    else document.write(a)
                 }
                 document.write('<br>');
             }      
         };
-        pyramid(8);
+        pyramid(8,"*");        
 
 //8
 /*Дан массив с числами (передается параметром). Выведите последовательно его элементы, используя рекурсию и не используя цикл.*/
@@ -161,12 +164,15 @@ newArray([21,23,1,22,36,15,-1]);
  let h=(new Date().getHours());
  console.log(h);
  document.write("ЗАДАНИЕ 9:  "+ "<br/>")
- function hello(nameUser){
-    nameUser=prompt("Как вас зовут?");
+ function hello(){
+    let nameUser=prompt("Как вас зовут?");
      if(h>=5 && h<=12)
-     { document.write("Доброе утро, " + nameUser+"!")}else if(h>12 && h<17)
-     {document.write("Добрый день, " +nameUser+"!")}else if(h>=17 && h<=23)
-     {document.write("Добрый вечер, " +nameUser+"!")}else{document.write("Доброй ночи, " +nameUser+"!")}
+     { document.write("Доброе утро, " + nameUser+"!")}
+     else if(h>12 && h<17)
+     {document.write("Добрый день, " +nameUser+"!")}
+     else if(h>=17 && h<=23)
+     {document.write("Добрый вечер, " +nameUser+"!")}
+     else{document.write("Доброй ночи, " +nameUser+"!")}
  }  
  hello();
     

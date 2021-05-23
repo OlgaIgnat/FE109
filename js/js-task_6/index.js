@@ -245,41 +245,84 @@ document.write() для вывода в «тело» HTML-документа.*/
     доменное имя
         + от 2 до 11*/
 
-    let mail = "text@gmail.com";
+    let mail = "olga@gmail.com";
     let allSymbol=["a", "b", "c", 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',"0","1","2","3","4","5","6","7","8","9","-", ".", "@", "_"];
     let symbol = ["-", ".", "@", "_"];
-    function checkMail(mail) {       
-        let mailSort = mail.split("");      
-        let c = mailSort.filter(n => allSymbol.indexOf(n) === -1);      //никаких русских символов
-        alert("Адрес эл.почты содержит недопустимые символы!!!  " +c)   //только "@ - . ", буквы, цифры
-        // как сделать, чтобы функция завершилась?
+    function checkMail(mail) { 
 
         let mailBefore = mail.slice(0, mail.indexOf("@"));
         let mailAfter = mail.slice(mail.indexOf("@")+1);     
         if (mailBefore.length <=2) return        
         else {
-            if (!isNaN(mailBefore[0])) return //первое число
+        if (!isNaN(mailBefore[0])) return    //первое число
             let mailBeforeArray = mailBefore.split("");
             let count=0;
-            for (let i=0;i<mailBeforeArray.length;i++) {
-                if (!isNaN(mailBeforeArray[i])) count++;
-            } 
-            for(j=0;j<symbol.length;j++){            //- первая и последняя буква не символы "@ - . _"
-                if(mailBefore[0] == symbol[j]) return
-                else {
-                    if(mailAfter[mailAfter.length-1] == symbol[j]) return
-                }
-            }
+        for (let i=0;i<mailBeforeArray.length;i++) {
+            if (!isNaN(mailBeforeArray[i])) count++;
+        } 
+        for(j=0;j<symbol.length;j++){            //- первая и последняя буква не символы "@ - . _"
+            if(mailBefore[0] == symbol[j]) return
+        else {
+            if(mailAfter[mailAfter.length-1] == symbol[j]) return
+        }
+        }
             let mailBeforPoint=mailAfter.slice(0, mailAfter.indexOf("."));    //почтовый сервис от 3 до 10 символов
-            if (mailBeforPoint.length <3 || mailBeforPoint.length >10) return;
-
+        if (mailBeforPoint.length <3 || mailBeforPoint.length >10) return;
+        
             let mailAfterPoint=mailAfter.slice(mailAfter.indexOf(".")+1);     //доменное имя от 2 до 11 символов
-            if (mailAfterPoint.length <2 || mailAfterPoint.length >11) return      
+        if (mailAfterPoint.length <2 || mailAfterPoint.length >11) return;
 
-        }            
+            let mailSort = mail.split(""); 
+            /*if(mailSort[n] == symbol[j] && mailSort[n] == mailSort[n+1]) return;*/
+
+            let c = mailSort.filter(n => allSymbol.indexOf(n) === -1);           //никаких русских символов
+            alert("Адрес эл.почты содержит недопустимые символы!!!  " +c);  //только "@ - . ", буквы, цифры
+            // как сделать, чтобы функция завершилась?
+
+        }                 
        
     }
+    
+    checkMail(mail);
+    
+    
 
-    checkMail(mail);  
+    /*---------Калькулятор---------*/
+/*let Calculator = function() {
+    this.get = function() {
+        this.a = +prompt("Введите число a");
+        this.b = +prompt("Введите число b");
+        this.oper = prompt("Введите операцию: +, -, *, /, %");
 
-  
+        this.operation();
+    };
+    this.operation = function() {
+        switch(this.oper){
+            case "+":
+                this.result = this.a + this.b;
+            break;
+            case "-":
+                this.result = this.a - this.b;
+            break;
+            case "*":
+                this.result = this.a * this.b;
+            break;
+            case "/":
+                this.result = this.a / this.b;
+            break;
+            case "%":
+                this.result = this.a * this.b / 100;
+            break;
+            default: this.result = 0;
+           
+        }
+
+        this.showResult();
+    };
+    this.showResult = function() {
+        alert(this.a + " " + this.oper + " " + this.b + " = " + this.result);
+
+    };
+}
+let calc = new Calculator();
+calc.get();*/

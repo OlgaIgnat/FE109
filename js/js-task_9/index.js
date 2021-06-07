@@ -141,7 +141,7 @@ let createList = function() {
      let notesParent = notes.closest("section"); //родитель input (div)   
      let arrayNotes = notes.value.split(". "); // получаем значение input и переводим в массив
      let ul = document.createElement("ul"), list;   
-     
+     /*как сделать првильно без массива?*/
       arrayNotes.forEach(elem => {          
       list = document.createElement("li");
       let text = document.createElement("span");

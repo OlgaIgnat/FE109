@@ -1,8 +1,8 @@
 /*---------Калькулятор---------*/
 let Calculator = function() {
     this.start=function(){
-        this.question = prompt("Включить калькулятор? (да/нет)");
-        if(this.question == "да"){
+        this.question = confirm("Включить калькулятор? ");
+        if(this.question){
             this.get();
         } else return
     }
@@ -10,11 +10,8 @@ let Calculator = function() {
         this.a = +prompt("Введите число a");
         this.oper = prompt("Введите операцию: +, -, *, /, %");
         this.b = +prompt("Введите число b");
-      
-
         this.operation();
     };
-
     this.operation = function() {
         switch(this.oper){
             case "+":
@@ -32,10 +29,8 @@ let Calculator = function() {
             case "%":
                 this.result = this.a * this.b / 100;
             break;
-            default: this.result = 0;
-           
+            default: this.result = 0;           
         }
-
         this.showResult();
     };
     this.showResult = function() {
@@ -43,8 +38,8 @@ let Calculator = function() {
         this.end();
     };
     this.end = function () {
-        this.questionEnd = prompt("Калькулятор выключить? (да/нет)");
-        if(this.questionEnd == "нет"){
+        this.questionEnd = confirm("Калькулятор выключить?");
+        if(!this.questionEnd){
             this.get();
         } else return
     }

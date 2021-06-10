@@ -39,7 +39,7 @@ section{
 }
 .todo_list{
   display: block;
-  margin: 20px auto;
+  margin: 20px auto 10px;
   padding: 30px;
   background-color: #e7ebee;            
   width: 800px;
@@ -69,19 +69,29 @@ input{
   outline:none;
   padding: 10px;
 }
+.button_delete_all,
 .button{
   font-family: Itim, cursive;
   font-weight: 800;
   font-size: 20px;
-  color: ghostwhite;
-  width: 70px;
-  height: 60px;
+  color: ghostwhite;  
   border: none;
   border-radius: 10px;
-  text-transform: uppercase;            ; 
+  text-transform: uppercase;             
   background-color: rgb(255, 20, 147);           
   box-shadow: 0 0 10px #504d4d;
 } 
+.button{
+  width: 70px;
+  height: 60px;
+}
+.button_delete_all{
+  width: 200px;
+  height: 50px;
+  display:block;
+  margin:20px auto 0;
+}
+
 img{
   padding: 10px;
   width: 80px;
@@ -138,10 +148,13 @@ span{
 let createList = function() {
      
      let notes = document.getElementById("todo_input"); //input
-     let notesParent = notes.closest("section"); //родитель input (div)   
+     let notesParent = notes.closest("section"); //родитель input (div)
+     if (notes.value == ""){           //проверяем  не пустой ли input
+       return alert ("The string is empty!")}; 
+
      let arrayNotes = notes.value.split(". "); // получаем значение input и переводим в массив
      let ul = document.createElement("ul"), list;   
-     /*как сделать првильно без массива?*/
+     
       arrayNotes.forEach(elem => {          
       list = document.createElement("li");
       let text = document.createElement("span");
@@ -149,7 +162,7 @@ let createList = function() {
       list.appendChild(text);      
       ul.appendChild(list);      
 
-      let btnDone = document.createElement("button");
+      let btnDone = document.createElement("button");//делаем кнопку "Выполнено"
       btnDone.classList.add("button_done");      
       list.appendChild(btnDone);
       list.insertBefore(btnDone, text);     
@@ -157,48 +170,44 @@ let createList = function() {
           text.classList.toggle("change");
       });     
 
-      let btnDelete = document.createElement("button");
+      let btnDelete = document.createElement("button");//делаем кнопку "Удалить"
       btnDelete.classList.add("button_delete");
       list.appendChild(btnDelete);
       btnDelete.addEventListener("click", function(){
         list.remove();                  
       });
 
-      let btnEdit = document.createElement("button");
+      let btnEdit = document.createElement("button");//делаем кнопку "Редактировать"
       btnEdit.classList.add("button_edit");
       list.appendChild(btnEdit);
       btnEdit.addEventListener("click", function(){
-        let change = confirm("Do you want to edit a note?");
+
+        let change = prompt("Enter your changes!");
         if(change){           
-          text.innerHTML = prompt("New note");                        
+          text.innerHTML = change;                                               
        }else{
-        confirm("You refused to make changes!");
-       }
-       
-      });
-    
-      /* хотела сделать кнопку удаления всех созданных строк,  но почему-то не работает???*/  
-
-    /*let toDoList = document.getElementsByClassName("todo_list");      
-      let btnDeleteAll =  document.createElement("button");
-      btnDeleteAll.classList.add("button_delete_all");
-      toDoList.appendChild(btnDeleteAll);
-      btnDeleteAll.addEventListener("click", function(){
-        ul.remove();
-        this.remove();
-      });*/   
-      
-    });  
-
+        alert("You refused to make changes!");
+       }       
+      });            
+    });
     notesParent.appendChild(ul);
-    notes.value = "";
+    notes.value = "";//очищаем инпут
   };
 
- /* let h1 = document.getElementsByTagName("h1");
-  h1.addEventListener("mouseover", function(){
-    console.log(this);
-    this.style.color = "rgb(255, 20, 147)"; 
-  }) ;*/
+    //делаем кнопку "Удалить все"
+  let toDoList = document.querySelector(".todo_list");      
+      let btnDeleteAll =  document.createElement("button");
+      btnDeleteAll.classList.add("button_delete_all");
+      btnDeleteAll.innerHTML = "Delete all";
+      toDoList.appendChild(btnDeleteAll);
+      btnDeleteAll.addEventListener("click", function(){
+        let ulAll = document.querySelectorAll("ul");
+        ulAll.forEach(elem => { 
+          elem.remove() ;
+        })      
+  });   
 
+
+ 
 
   

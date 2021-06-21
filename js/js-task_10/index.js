@@ -70,18 +70,27 @@ let DOM = function() {
         return document.createElement(tagName);
     };
 
-    this.attr = function(element, name, value){   //добавление элементу атрибута  со значением 
-            return element.setAttribute(name, value);              
+    this.attr = function(element, name, value){   //добавление элементу атрибута  со значением
+        if (!value) {
+            return element.getAttribute(name)
+        } else {
+            element.setAttribute(name, value)
+        } 
+        
     };
 
-    this.html = function(element, value){       //добавление содержимого в элемент
-        return element.innerHTML = value;
+    this.html = function(element, value){   //добавление содержимого в элемент
+        if (!value) {
+            return element.innerHTML
+        }else {
+            element.innerHTML = value;
     }
-     //работает неправильно!!!
-    this.search = function(element, selector){      //поиск элемента по селектору
-        if( element){       
-            return element.querySelectorAll(selector)
-        }else  return document.querySelectorAll(selector)
+       
+    }   
+     
+    this.search = function(element, selector, number){      //поиск элемента по селектору
+        if( !element || !selector) return false;       
+            return (!number) ? element.querySelector(selector) : element.querySelectorAll(selector[number]);        
     };                         
     
     this.addClass = function(element, className) {   //добавление класса элементу
@@ -90,28 +99,25 @@ let DOM = function() {
     };
 
     this.removeClass = function(element, className){ //удаление класса у элемента
-        return element.classList.remove(className)
+        element.classList.remove(className)
     };
 
     this.toggleClass = function(element, className){   //включение-выключение класса
-        return element.classList.toggle(className)        
+        element.classList.toggle(className)        
     };
 
     this.hasClass = function(element, className){ //проверка существования класса в элементе
-        return element.classList.contains(className)
+        return(element.classList.contains(className)) ? true : false;
     };
 
     this.append = function(element, newElement, beforeElement){  // для добавления новых элементов внутрь какого-либо после всего его содержимого,
-        if (beforeElement){
-           return element.insertBefore(beforeElement, newElement);
-        }else return element.appendChild(newElement);
+        if (!element || !newElement) return false;
+        if(!beforeElement) element.appendChild(newElement);
+        else  element.insertBefore(newElement, beforeElement);
     };
 
-    this.on = function(element, eventName, funcName){
-        return element.addEventListener(eventName, funcName(){
-            alert("Hello")
-        });
-
+     this.on = function(element, eventName, funcName){
+        element.addEventListener(eventName, funcName);
     }
 }
 
@@ -121,6 +127,7 @@ let elemNew = new DOM();
 /*let body = document.getElementsByTagName("<body>");*/
 let body = elemNew.create("body");
 let h1 = elemNew.create("h1");
+let h2 = elemNew.create("h2");
 let a = elemNew.create("a");
 let p = elemNew.create("p");
 let div = elemNew.create("div");
@@ -129,6 +136,7 @@ let div = elemNew.create("div");
 elemNew.html(h1,"Text");
 elemNew.html(p,"<a>Text</a>");
 console.log(p);
+elemNew.html(h2,"Text, text,text");
 
 elemNew.attr(h1, "style","color: red; font-size: 3em");
 console.log(h1);
@@ -148,13 +156,15 @@ console.log(div);*/
 
 //console.log(elemNew.hasClass(a, "active"));
 
-console.log(elemNew.append(body, h1));
-console.log(elemNew.append(body, p));
-console.log(elemNew.append(body, div));
-console.log(elemNew.append(div, a));
-
+elemNew.append(body, h1);
+elemNew.append(body, p);
+elemNew.append(body, div);
+elemNew.append(div, a);
+elemNew.append(div, h2, a);
 let html = document.querySelector("html");
 html.appendChild(body);
 document.write(h1);
 
-/*h1.addClass("btn1", "btn2")*/
+
+let act = function() { console.log("Hello!!!")};
+elemNew.on(h1, "click", act);

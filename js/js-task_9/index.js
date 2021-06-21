@@ -182,7 +182,7 @@ let createList = function() {
       list.appendChild(btnEdit);
       btnEdit.addEventListener("click", function(){
 
-        let change = prompt("Enter your changes!");
+        let change = prompt("Enter your changes!", text.textContent) || text.textContent;
         if(change){           
           text.innerHTML = change;                                               
        }else{

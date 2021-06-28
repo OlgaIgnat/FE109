@@ -103,7 +103,7 @@ class User{
                         name: newInfo.name || this.datauser.name,
                         email: newInfo.email || this.datauser.email,
                         address: newInfo.address || this.datauser.address,
-                        phone: newInfo.phone || this.datauser.phone
+                        phone: newInfo.phone || this.datauser.phone 
                      }
     }
 
@@ -114,8 +114,7 @@ class User{
     get (){
         return this.data ;  
     }
-}
-
+} 
 class Contacts{
     constructor(){
         this.data = [];

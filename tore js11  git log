@@ -1,0 +1,72 @@
+[33mcommit 1627609089b8efd0352f9851087cc1c2fd66be56[m[33m ([m[1;36mHEAD -> [m[1;32molga[m[33m, [m[1;31morigin/olga[m[33m)[m
+Author: OlgaIgnat <82769866+OlgaIgnat@users.noreply.github.com>
+Date:   Mon Jun 21 18:50:13 2021 +0300
+
+    js11
+
+[1mdiff --git a/js/js-task_10/index.js b/js/js-task_10/index.js[m
+[1mindex d310a00..ef66950 100644[m
+[1m--- a/js/js-task_10/index.js[m
+[1m+++ b/js/js-task_10/index.js[m
+[36m@@ -70,18 +70,27 @@[m [mlet DOM = function() {[m
+         return document.createElement(tagName);[m
+     };[m
+ [m
+[31m-    this.attr = function(element, name, value){   //добавление элементу атрибута  со значением [m
+[31m-            return element.setAttribute(name, value);              [m
+[32m+[m[32m    this.attr = function(element, name, value){   //добавление элементу атрибута  со значением[m
+[32m+[m[32m        if (!value) {[m
+[32m+[m[32m            return element.getAttribute(name)[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m            element.setAttribute(name, value)[m
+[32m+[m[32m        }[m[41m [m
+[32m+[m[41m        [m
+     };[m
+ [m
+[31m-    this.html = function(element, value){       //добавление содержимого в элемент[m
+[31m-        return element.innerHTML = value;[m
+[32m+[m[32m    this.html = function(element, value){   //добавление содержимого в элемент[m
+[32m+[m[32m        if (!value) {[m
+[32m+[m[32m            return element.innerHTML[m
+[32m+[m[32m        }else {[m
+[32m+[m[32m            element.innerHTML = value;[m
+     }[m
+[31m-     //работает неправильно!!![m
+[31m-    this.search = function(element, selector){      //поиск элемента по селектору[m
+[31m-        if( element){       [m
+[31m-            return element.querySelectorAll(selector)[m
+[31m-        }else  return document.querySelectorAll(selector)[m
+[32m+[m[41m       [m
+[32m+[m[32m    }[m[41m   [m
+[32m+[m[41m     [m
+[32m+[m[32m    this.search = function(element, selector, number){      //поиск элемента по селектору[m
+[32m+[m[32m        if( !element || !selector) return false;[m[41m       [m
+[32m+[m[32m            return (!number) ? element.querySelector(selector) : element.querySelectorAll(selector[number]);[m[41m        [m
+     };                         [m
+     [m
+     this.addClass = function(element, className) {   //добавление класса элементу[m
+[36m@@ -90,28 +99,25 @@[m [mlet DOM = function() {[m
+     };[m
+ [m
+     this.removeClass = function(element, className){ //удаление класса у элемента[m
+[31m-        return element.classList.remove(className)[m
+[32m+[m[32m        element.classList.remove(className)[m
+     };[m
+ [m
+     this.toggleClass = function(element, className){   //включение-выключение класса[m
+[31m-        return element.classList.toggle(className)        [m
+[32m+[m[32m        element.classList.toggle(className)[m[41m        [m
+     };[m
+ [m
+     this.hasClass = function(element, className){ //проверка существования класса в элементе[m
+[31m-        return element.classList.contains(className)[m
+[32m+[m[32m        return(element.classList.contains(className)) ? true : false;[m
+     };[m
+ [m
+     this.append = function(element, newElement, beforeElement){  // для добавления новых элементов внутрь какого-либо после всего его содержимого,[m
+[31m-        if (beforeElement){[m
+[31m-           return element.insertBefore(beforeElement, newElement);[m
+[31m-        }else return element.appendChild(newElement);[m
+[32m+[m[32m        if (!element || !newElement) return false;[m
+[32m+[m[32m        if(!beforeElement) element.appendChild(newElement);[m
+[32m+[m[32m        else  element.insertBe

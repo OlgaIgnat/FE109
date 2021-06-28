@@ -2,10 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>JS 11</title>
-    <script src="index.js"></script>
+    <title>JS 11</title> 
+    <link href="css/style.css" rel="stylesheet"> 
+     <!--<link rel="stylesheet" href="css/reset.css"> -->
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
+    <!--<script src="index.js"></script>-->
 </head>
 <body>
+       
+        <section class="contacts_wraper">
+            <form class="contacts_notes" id="contactForm">
+                <div class="input_wraper">
+                     <input type="text" id="inputName" placeholder="Name">
+                </div>
+                <div class="input_wraper">
+                    <input type="text" id="inputEmail" placeholder="E-mail">
+               </div>
+               <div class="input_wraper">
+                <input type="text" id="inputAddress" placeholder="Address">
+                </div>
+                <div class="input_wraper">
+                    <input type="text" id="inputPhone" placeholder="Phone">
+               </div>
+                <div class="button_wraper">                            
+                    <button class="button" id="buttonCreateContact" onclick="getInfoForm()" >Add</button>
+                                           
+                    <button class="button" id="buttonShowContacts" onclick="showContacts()">Show</button>
+                </div>
+            </form> 
+            <div class="contacts-table">
+                <table>
+                    <tr>
+                        <th>№</th>
+                        <th>Name</th>
+                        <th>E-mail</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </table>
+            </div>     
+        </section>      
+   
+    <script src="index.js"></script>
 
 </body>
 </html>

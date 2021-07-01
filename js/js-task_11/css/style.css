@@ -14,16 +14,23 @@
   section{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items:flex-start;
+    margin-left: 30px;
     margin-top: 20px;
     height: 100%;
   }
+  .contacts{
+      display: flex;
+      justify-content: space-between;
+  }
   .contacts_notes,
-  .contacts-table{
+  .contacts-table,
+  .contacts_notes_edit{
     display: flex;
     flex-direction: column;
     align-items: center;  
-    margin-bottom: 40px;    
+    margin-bottom: 40px;
+    margin-right: 40px;    
     padding: 20px;
     background-color: #e7ebee;     
     border: 2px solid;
@@ -32,29 +39,43 @@
     border-radius: 5px;
   } 
   .contacts_notes{
-    width: 800px;
+    width: 600px;
   }
   .contacts-table{
     width: 1000px;
+    display: none;
+  }
+  .contacts_notes_edit{
+    width: 300px;    
     display: none;
   }
   .active{
    display: block;
    
   }
+  
   .red{
     border: 2px solid red;
   }
+  .nored{
+    border:none;
+  }
+
   table {
     width: 100%;
     color: rgb(73, 72, 72);
     border: 1px solid rgb(155, 150, 150);
+    border-collapse: collapse; 
+    align-items: center;
+    
   }
-  th{
-    text-align: center;
-    width: 14%; 
-    font-weight: 600;    
+  th{    
+    width: 14%;
+    text-align: start; 
+    font-weight: 900; 
+    border-bottom: 1px solid rgb(155, 150, 150);   
   }
+ 
   td{
    background-color:#e7ebee;  
   }  
@@ -74,18 +95,49 @@
     padding: 10px;
     margin-bottom: 15px;
   }
-  .button_delete_all,
-  .button{
+  #inputName_edit,
+  #inputEmail_edit,
+  #inputAddress_edit,
+  #inputPhone_edit{
+    font-size: 14px;
+    width: 250px;
+    height: 30px;
+  }
+  .button_wraper{
+    display: flex;
+    justify-content: space-evenly;
+    width: 500px;
+   
+  }
+  
+  .button,
+  .button_edit{
     font-family: Montserrat, sans-serif;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 14px;
     color: ghostwhite;  
     border: none;
     border-radius: 5px;                
     background-color: rgb(77, 74, 75);           
     box-shadow: 0 0 10px #504d4d; 
-    width: 80px;
-    height: 30px;
-  }  
-  
-  
+    width: 140px;
+    height: 40px;
+    padding: 3px;
+
+  } 
+  button.pencil,
+  button.basket{
+    display: block;   
+    background-repeat: no-repeat; 
+    background-size: contain;
+    width: 30px;
+    height: 20px;
+    border: none;  
+  }
+  button.pencil{
+    background-image:url(../img/img2.png);
+  }
+  button.basket{
+    background-image:url(../img/img1.png);
+    opacity: 0.5; 
+  }

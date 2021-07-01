@@ -114,36 +114,36 @@ class User{
     get (){
         return this.data ;  
     }
-} 
+}
+
+
 class Contacts{
     constructor(){
         this.data = [];
     }
     add(name, email, address, phone){
-            let id;
-            if(this.data.length==0)
-            {id=1}else{
-                id=this.data[this.data.length-1].datauser.id+1;
-            }
-            let user = new User(id,
+        let id;
+        (this.data.length==0) ? id=1 : id=this.data[this.data.length-1].datauser.id+1;
+        
+        let newUser = new User(id,
                 name, email, address, phone);
-            this.data.push(user) ;            
-            console.log(this.data);
-        }
-    remove(id){
-        this.data = this.data.filter(elem=>elem.datauser.id!=id);
-
+        this.data.push(newUser) ;           
         }
 
     edit(id, newInfo){
-        let index = this.data.findIndex(elem=>elem.datauser.id===id);
-        let editUser=this.data.filter(elem=>elem.datauser.id===id);
-        editUser[index].edit(newInfo);
-        } 
-    
+        let index = this.data.findIndex(elem=> elem.datauser.id===id);
+        this.data[index].edit(newInfo);
+    }
+    getInfo(id){
+        let index = this.data.findIndex(elem=> elem.datauser.id===id);
+        console.log(this.data[index].get)
+    }    
     
     get(){
         return this.data;
+        }
+    remove(id){
+        this.data = this.data.filter( elem=> elem.datauser.id!=id);
         }
         
 }
@@ -160,23 +160,22 @@ class ContactsApp extends Contacts{
         super(data);        
     }
     createContacts () {
-        let contactsTable =  document.querySelector(".contacts-table")
-        if(contactsTable.classList.contains("active") == false){
-            contactsTable.classList.add("active");}
-        let table= document.querySelector("table");
-
-        console.log(table);
-        //table.innerHTML = "";
-        this.data.forEach((userItem, index)=>{
-            let stringTable = document.createElement("tr");
+        let contactsTable =  document.querySelector(".contacts-table");
+        contactsTable.classList.add("active");
+        let table= contactsTable.querySelector("tbody");     
+        table.innerHTML = "";
+        console.log(this.data);
+        this.data.forEach((user, index)=>{
+           let stringTable = document.createElement("tr");                    
             stringTable.innerHTML = `
-            <td>${userItem.user.data.id}</td>
-            <td>${userItem.user.data.name}</td>
-            <td>${userItem.user.data.email}</td>
-            <td>${userItem.user.data.address}</td>
-            <td>${userItem.user.data.phone}</td>
-            <td> <i class= "fa fa-pensil"></i></td>
-            <td> <i class= "fa fa-trash"></i></td>
+            <td>${user.datauser.id}</td>
+            <td>${user.datauser.name}</td>
+            <td>${user.datauser.email}</td>
+            <td>${user.datauser.address}</td>
+            <td>${user.datauser.phone}</td>
+            
+            <td><button class="pencil" data-index="${index}" onClick="editContact(${user.datauser.id})"></button></td>
+            <td><button class="basket" data-index="${index}" onClick="deleteContact(${user.datauser.id})" ></button></td>
             `
         table.appendChild(stringTable);
         
@@ -185,7 +184,7 @@ class ContactsApp extends Contacts{
     }
 }
 
-getInfoForm = function(){
+let getInfoForm = function(){
     let userName = document.querySelector("#inputName").value;
     let email = document.querySelector("#inputEmail").value;
     let address = document.querySelector("#inputAddress").value;
@@ -204,34 +203,54 @@ getInfoForm = function(){
             document.querySelector("#inputPhone").classList.add("red");
             return false;
     }else
+       
         addUserContact(userName, email, address, phone);
         form.reset();
+        document.querySelector("#inputName").classList.remove("red");
+        document.querySelector("#inputEmail").classList.remove("red");
+        document.querySelector("#inputAddress").classList.remove("red");
+        document.querySelector("#inputPhone").classList.remove("red");
 };
 
 
-addUserContact = function(userName, email, address, phone){
+let addUserContact = function(userName, email, address, phone){    
     contactList.add(userName, email, address, phone);
+    alert("Contact added successfully!")
     contactList.createContacts();
 };
 
-showContacts = function(){
-   // document.querySelector(".contacts-table").classList.add("active");
+let showContacts = function(){  
     contactList.createContacts(); 
 };
 
-deleteContact = function(index){
+let deleteContact = function(index){
     contactList.remove(index);
     contactList.createContacts();
 };
 
+let editContact = function(){
+    document.querySelector(".contacts_notes_edit").classList.toggle("active");    
+    
+};
+let editNewContact = function(id, newInfo){
+    id =
+    newInfo={
+        name: document.querySelector("#inputName_edit").value,
+        email: document.querySelector("#inputEmail_edit").value,
+        address: document.querySelector("#inputAddress_edit").value,
+        phone: document.querySelector("#inputPhone_edit").value}
+    contactList.edit(id,newInfo);
+}
+
 
 let contactList = new ContactsApp();
  
-// contactList.add("1", "Anna", "anna@gmail", "Brest", "1000000");
-// contactList.add("2", "Bob", "bob@gmail", "Berlin", "2000000");
-// contactList.add("3", "Olga", "olga@gmail", "Minsk", "2000000");
-// contactList.add("4", "Mary", "mary@gmail", "Gomel", "3000000");
-console.log(contactList);
+contactList.add("Anna", "anna@gmail", "Brest", "1000000");
+contactList.add("Bob", "bob@gmail", "Berlin", "2000000");
+console.log(contactList)
+//contactList.edit(1,{name: "ГришинNew", email: "text@mail.ruNEW",address: "VitebskNEW",phone: "+375NEW"});
+// contactList.add("Mary", "mary@gmail", "Gomel", "3000000");
+//console.log(contactList);
 let form = document.querySelector("#contactForm");
 
 //document.querySelector("#buttonCreateContact").addEventListener('click', getInfoForm);

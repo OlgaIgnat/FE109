@@ -91,6 +91,8 @@
 // teacher.getCourse();
 // teacher.getSalary();
 // document.write("----------------------------------------------------------------" + "<br>") 
+//----------------------------------------------------------------------------------------------------------------------
+
 
 class User{
     constructor(id,
@@ -98,13 +100,13 @@ class User{
             this.datauser = {id,
                 name, email, address, phone};
     }
-    edit(newInfo){
+    edit(newInfo){        
        this.datauser = {id: this.datauser.id,
                         name: newInfo.name || this.datauser.name,
                         email: newInfo.email || this.datauser.email,
                         address: newInfo.address || this.datauser.address,
                         phone: newInfo.phone || this.datauser.phone 
-                     }
+                     }        
     }
 
     get info(){
@@ -121,49 +123,54 @@ class Contacts{
     constructor(){
         this.data = [];
     }
-    add(name, email, address, phone){
+    
+    add(name, email, address, phone, idNew){        
         let id;
         (this.data.length==0) ? id=1 : id=this.data[this.data.length-1].datauser.id+1;
-        
+        id = idNew || id;
         let newUser = new User(id,
                 name, email, address, phone);
-        this.data.push(newUser) ;           
-        }
+        this.data.push(newUser);        
+    }
 
-    edit(id, newInfo){
-        let index = this.data.findIndex(elem=> elem.datauser.id===id);
+    edit(id, newInfo){        
+        let index = this.data.findIndex(elem=> +elem.datauser.id=== +id);
+        console.log(id, newInfo);
         this.data[index].edit(newInfo);
     }
+    
+    remove(id){
+        this.data = this.data.filter( elem=> elem.datauser.id!=id);
+    }
+
+    removeAll() {
+        this.data = [];
+    }
+
     getInfo(id){
         let index = this.data.findIndex(elem=> elem.datauser.id===id);
         console.log(this.data[index].get)
     }    
-    
+        
     get(){
         return this.data;
-        }
-    remove(id){
-        this.data = this.data.filter( elem=> elem.datauser.id!=id);
-        }
+    }
         
 }
-let contact = new Contacts;
 
-// contact.add("1", "Anna", "anna@gmail", "Brest", "1000000");
-// contact.add("2", "Olga", "olga@gmail", "Minsk", "2000000");
-// contact.add("3", "Mary", "mary@gmail", "Gomel", "3000000");
-// contact.remove("3");
-// console.log(contact);
 
 class ContactsApp extends Contacts{
     constructor(data){
-        super(data);        
+        super(data);
+        this.apiData();        
     }
-    createContacts () {
+    createContacts () {             
         let contactsTable =  document.querySelector(".contacts-table");
+    
         contactsTable.classList.add("active");
+        
         let table= contactsTable.querySelector("tbody");     
-        table.innerHTML = "";
+        table.innerHTML = " ";    
         console.log(this.data);
         this.data.forEach((user, index)=>{
            let stringTable = document.createElement("tr");                    
@@ -171,25 +178,56 @@ class ContactsApp extends Contacts{
             <td>${user.datauser.id}</td>
             <td>${user.datauser.name}</td>
             <td>${user.datauser.email}</td>
-            <td>${user.datauser.address}</td>
+            <td>${user.datauser.address.city || user.datauser.address}</td>
             <td>${user.datauser.phone}</td>
             
             <td><button class="pencil" data-index="${index}" onClick="editContact(${user.datauser.id})"></button></td>
             <td><button class="basket" data-index="${index}" onClick="deleteContact(${user.datauser.id})" ></button></td>
             `
-        table.appendChild(stringTable);
+        table.appendChild(stringTable);       
         
-        console.log(table);
         });
     }
-}
+
+    setStorage(){
+         localStorage.setItem("users", JSON.stringify(this.data));
+    }
+
+    getStorage(){
+        let localUsersData =  JSON.parse(localStorage.getItem("users")); 
+         if(localUsersData && localUsersData.length > 0) {
+            localUsersData.forEach(element =>{
+                this.add(element.datauser.name, element.datauser.email, element.datauser.address, element.datauser.phone, element.datauser.id)
+            }) 
+         }
+    }
+    async apiData(){        
+        let response = await fetch('https://jsonplaceholder.typicode.com/users');
+        if (!response.ok) return;
+
+        let Apidata = await response.json();
+        //console.log(Apidata, response.status);
+        //console.log(Apidata[1].username);
+        //console.log(this.data);        
+        if (this.data.length==0){                        
+            Apidata.forEach((user,index) =>{
+                //console.log(Apidata[index].username);
+                addUserContact(Apidata[index].username, Apidata[index].email, Apidata[index].address, Apidata[index].phone);                
+            })
+        };
+
+    };
+    
+}  
+
 
 let getInfoForm = function(){
+    let form = document.querySelector("#contactForm");
     let userName = document.querySelector("#inputName").value;
     let email = document.querySelector("#inputEmail").value;
     let address = document.querySelector("#inputAddress").value;
     let phone = document.querySelector("#inputPhone").value;
-
+    
     if(!userName ||  userName.value == " "){
         document.querySelector("#inputName").classList.add("red");}       
 
@@ -202,10 +240,10 @@ let getInfoForm = function(){
     if(!phone ||  phone.value == " "){
             document.querySelector("#inputPhone").classList.add("red");
             return false;
-    }else
-       
+    }else    
         addUserContact(userName, email, address, phone);
         form.reset();
+       
         document.querySelector("#inputName").classList.remove("red");
         document.querySelector("#inputEmail").classList.remove("red");
         document.querySelector("#inputAddress").classList.remove("red");
@@ -213,47 +251,87 @@ let getInfoForm = function(){
 };
 
 
-let addUserContact = function(userName, email, address, phone){    
-    contactList.add(userName, email, address, phone);
-    alert("Contact added successfully!")
+
+let addUserContact = function(userName, email, address, phone){  
+    contactList.add(userName, email, address, phone);   
+    //alert("Contact added successfully!");    
+    contactList.createContacts();    
+    contactList.setStorage();
+};
+
+let clearContact = function(){
+    document.querySelector("#inputName").value = "";
+    document.querySelector("#inputEmail").value = "";
+    document.querySelector("#inputAddress").value = "";
+    document.querySelector("#inputPhone").value = "";
+}
+
+let showContacts = function(){    
+    contactList.getStorage();
     contactList.createContacts();
+  
 };
-
-let showContacts = function(){  
-    contactList.createContacts(); 
-};
-
 let deleteContact = function(index){
     contactList.remove(index);
     contactList.createContacts();
+    contactList.setStorage();
 };
 
-let editContact = function(){
-    document.querySelector(".contacts_notes_edit").classList.toggle("active");    
-    
+let editContact = function(id){    
+    document.querySelector("#buttonEditContact").dataset.id = id;
+    document.querySelector(".contacts_notes_edit").classList.add("active");
+    //console.log(array.User.datauser);
+    let name = document.querySelector("#inputName_edit"); 
+    let email = document.querySelector("#inputEmail_edit"); 
+    let address = document.querySelector("#inputAddress_edit"); 
+    let phone = document.querySelector("#inputPhone_edit");    
+
+    let user = contactList.data.filter(user =>{
+        if(+user.datauser.id == +id) return user;
+    })
+
+    name.value = user[0].datauser.name; 
+    email.value = user[0].datauser.email;
+    address.value = user[0].datauser.address; 
+    phone.value = user[0].datauser.phone;   
 };
-let editNewContact = function(id, newInfo){
-    id =
+
+let editNewContact = function(){    
+    let id = document.querySelector("#buttonEditContact").dataset.id;    
     newInfo={
         name: document.querySelector("#inputName_edit").value,
         email: document.querySelector("#inputEmail_edit").value,
         address: document.querySelector("#inputAddress_edit").value,
-        phone: document.querySelector("#inputPhone_edit").value}
-    contactList.edit(id,newInfo);
+        phone: document.querySelector("#inputPhone_edit").value
+    }   
+    contactList.edit(id,newInfo);   
+    contactList.createContacts();
+    contactList.setStorage();   
+    document.querySelector("#buttonEditContact").removeAttribute("dataset.id");
+    document.querySelector(".contacts_notes_edit").classList.remove("active");
+    let formEdit = document.querySelector("#contactFormEdit");
+    formEdit.reset();
 }
 
-
 let contactList = new ContactsApp();
+showContacts();
+
+
+//let contact = new Contacts;
+// contact.add("1", "Anna", "anna@gmail", "Brest", "1000000");
+// contact.add("2", "Olga", "olga@gmail", "Minsk", "2000000");
+// contact.add("3", "Mary", "mary@gmail", "Gomel", "3000000");
+// contact.remove("3");
+// console.log(contact);
  
-contactList.add("Anna", "anna@gmail", "Brest", "1000000");
-contactList.add("Bob", "bob@gmail", "Berlin", "2000000");
-console.log(contactList)
+//contactList.add("Anna", "anna@gmail", "Brest", "1000000");
+//contactList.add("Bob", "bob@gmail", "Berlin", "2000000");
+//console.log(contactList)
 //contactList.edit(1,{name: "ГришинNew", email: "text@mail.ruNEW",address: "VitebskNEW",phone: "+375NEW"});
 // contactList.add("Mary", "mary@gmail", "Gomel", "3000000");
 //console.log(contactList);
-let form = document.querySelector("#contactForm");
+
 
 //document.querySelector("#buttonCreateContact").addEventListener('click', getInfoForm);
-
 //let buttonShow = document.querySelector("#buttonShowContacts");
 //buttonShow.addEventListener("click", showContacts)

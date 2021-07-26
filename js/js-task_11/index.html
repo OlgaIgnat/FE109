@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,300&display=swap" rel="stylesheet">
     <!--<script src="index.js"></script>-->
 </head>
-<body>       
+<body>
+    <h1>CONTACTS</h1>       
     <section class="contacts_wraper">
         <div class="contacts">
             <form class="contacts_notes" id="contactForm">
@@ -29,10 +30,10 @@
                 <div class="button_wraper">                            
                     <button type = "button" class="button" id="buttonCreateContact" onclick="getInfoForm()">Add contact</button>
                                            
-                    <button type = "button" class="button" id="buttonShowContacts" onclick="showContacts()">Show all contacts</button>
+                    <button type = "button" class="button" id="buttonShowContacts" onclick="clearContact()">Сlear contact</button>
                 </div>
             </form>
-            <form class="contacts_notes_edit" id="contactForm">
+            <form class="contacts_notes_edit" id="contactFormEdit">
                 <div class="input_wraper_edit">
                      <input type="text" id="inputName_edit" placeholder="Name">
                 </div>
@@ -54,13 +55,13 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>№</th>
+                            <th>ID</th>
                             <th>Name</th>
                             <th>E-mail</th>
                             <th>Address</th>
                             <th>Phone</th>
-                            <th></th>
-                            <th></th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

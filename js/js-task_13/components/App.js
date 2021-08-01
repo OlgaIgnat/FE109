@@ -43,10 +43,17 @@ class App {
     
 }
 
+
+
 let loadPage = function() {
     // console.log(window.location.hash);
     new App().init();
     let catalog = document.querySelector(".catalog");
+    let cartTable = document.querySelector(".cartTable");
+    let productBlock = document.querySelector(".productBlock");
+    if (catalog) catalog.remove();
+    if (cartTable) cartTable.remove();
+    if (productBlock) productBlock.remove();
     if (window.location.hash.indexOf("#product")!=-1) {
         Product.init();
     } else 
@@ -56,6 +63,7 @@ let loadPage = function() {
         Catalog.init();
     }
 }
+
 document.addEventListener("DOMContentLoaded", function() {
     loadPage();
     loadCart();

@@ -28,10 +28,11 @@ header{
 }
 
 .header_container{  
-    display: flex;
+    display: flex;   
     height: 140px;
+    margin: 0 auto;
     align-items: center;
-    justify-content:space-between;    
+    justify-content:space-between;   
 }
 
 .wraper{
@@ -54,7 +55,7 @@ h2{
 }
 
 h3{
-    padding-bottom:15px ;
+    padding-bottom:20px ;
     font-size: 40px;
 }
 
@@ -109,7 +110,7 @@ ul li a:hover p{
     width: 1120px;
     padding: 0px 40px;
     display: block;
-    margin: 0 auto;    
+    margin: 0 auto;      
 }
   
 .carousel img {
@@ -149,7 +150,7 @@ ul li a:hover p{
 }
   
 .prev {
-    left: 50px;
+    left: 60px;
 }
   
 .next {
@@ -196,8 +197,9 @@ ul li a{
     visibility: hidden;
     opacity: 0;
     -webkit-transition: opacity 01s;
-    transition: opacity 1s;    
-  }
+    transition: opacity 1s;
+    text-align: center;    
+}
 
 .modal .modal_content {
     font-family: Style Script, cursive;
@@ -206,32 +208,57 @@ ul li a{
     text-align: center;    
     background-color: #fefefe;
     margin: 30px auto ;
-    padding: 20px;
+    padding: 10px;
     border-radius: 50px;
     border: 1px solid #888;
-    width: 40%;
+    width: 50%;
     height: 600px;
-    z-index: 99999;    
+    z-index: 99999;       
 }
 
-.modal .modal_content .close_modal_window {
-    color: #aaa;
-    float: right;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.modal_content img{
-    display: block;
-    height: 90px;
+#my_modal .modal_content img{
+    height: 80px;
     width: 100px;
-    border-radius: 40%;
-    opacity: 0.3;
-    margin: 0 auto;    
+    opacity: 0.4;
+    display: block;
+    margin: 0 auto;
+    border-radius: 30px;   
+}
+
+#my_modal p{
+    padding: 20px;
+}
+
+img .modal_content {
+    width: 600px;
+    height: 700px;
+    opacity: 1;
+    display: block;    
+    z-index: 99998;
+    position: relative;        
+}
+
+.close_modal_window {
+    color: #fefefe;    
+    font-size: 80px;
+    font-weight: 900;
+    cursor: pointer;   
+    top: 20px;
+    right: 30%;   
+    position: absolute;
+    z-index: 1000000;    
+}
+
+.text .close_modal_window {
+    color: rgb(196, 193, 193);   
 }
 
 footer{
   height: 80px;
   display: block;
 }
+
+.visible{
+    visibility: visible;
+    opacity:1;
+}     

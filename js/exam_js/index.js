@@ -46,12 +46,7 @@
  let listElems = carousel.querySelectorAll('li');
  let listElemsA = carousel.querySelectorAll('a');
  let listElemsImg = carousel.querySelectorAll('img');
- console.log(listElemsA);
-
- listElemsA.forEach(el => {         
-      el.setAttribute("target", "_blank");
-      console.log(el);    
-  });
+ console.log(listElemsA); 
 
  let position = 0; // положение ленты прокрутки
 
@@ -59,36 +54,38 @@
    position += width * count;   
    position = Math.min(position, 0)
    list.style.marginLeft = position + 'px';
- };
+ }
 
  carousel.querySelector('.next').onclick = function() {    // сдвиг вправо  
    position -= width * count;  
    position = Math.max(position, -width * (listElems.length - count));
    list.style.marginLeft = position + 'px';
- }; 
+ } 
+
+const modalLinks = document.querySelectorAll(".modal_link");
+const modal = document.querySelectorAll(".modal");
+const popupClose = document.querySelectorAll(".popup_close");
 
 
- var modal = document.getElementById("my_modal");
- var modal_content = document.getElementsByClassName("modal_content")
- var popupAbout = document.getElementById("popup");
- var span = document.getElementsByClassName("close_modal_window")[0];
+modalLinks.forEach(function(item){
+  item.addEventListener('click', function(){
+      const popupName = item.getAttribute('href').replace('#','');
+      document.getElementById(popupName).classList.add("visible");      
+  });    
+})
 
- popupAbout.onclick = function () {
-    //bodyLock();   
-    modal.style.visibility = "visible";
-    modal.style.opacity = "1";     
- }
+popupClose.forEach(function(item){   
+  item.addEventListener('click', function(e){ 
+    let parent= item.closest(".modal");         
+    parent.classList.remove("visible");    
+  });  
+})
 
- span.onclick = function () {
-    //bodyUnLock();
-    modal.style.visibility = "hidden";
-    modal.style.opacity = "0";    
- }
-
- window.onclick = function (event) {
-    //bodyUnLock();
-    if (event.target == modal) {
-        modal.style.visibility = "hidden";
-        modal.style.opacity = "0";        
-    }
-}
+window.onclick = function (event) {  
+  modal.forEach(function(elem){
+    if (event.target == elem) { 
+    console.log(event.target)
+    elem.classList.remove("visible");
+    };
+  });
+}    
